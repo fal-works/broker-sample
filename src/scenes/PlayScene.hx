@@ -7,15 +7,16 @@ import broker.sound.*;
 
 class PlayScene extends Scene {
 	var world: World;
-	var music: Sound;
+	var sounds: Sounds;
 	var musicChannel: SoundChannel;
+	var explosionSound: Sound;
 
 	public function new(?heapsScene: h2d.Scene) {
 		super(if (heapsScene != null) heapsScene else new h2d.Scene());
 
 		@:nullSafety(Off) {
 			this.world = null;
-			this.music = null;
+			this.sounds = null;
 			this.musicChannel = cast null;
 		}
 	}
@@ -28,12 +29,8 @@ class PlayScene extends Scene {
 
 		this.world = new World(this.mainLayer);
 
-		this.music = {
-			data: Res.music_466998,
-			isLooped: true,
-			preventsLayered: true
-		};
-		this.musicChannel = music.play().unwrap();
+		this.sounds = new Sounds();
+		this.musicChannel = this.sounds.music.play().unwrap();
 	}
 
 	override function update(): Void {
@@ -60,4 +57,17 @@ class PlayScene extends Scene {
 		final nextScene = new PlayScene();
 		Global.sceneTransitionTable.runTransition(this, nextScene);
 	}
+}
+
+/**
+	Set of `broker.sound.Sound` instances.
+**/
+class Sounds {
+	public final music: Sound = {
+		data: Res.music_466998,
+		isLooped: true,
+		preventsLayered: true
+	};
+
+	public function new() {}
 }
