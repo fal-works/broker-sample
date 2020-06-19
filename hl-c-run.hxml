@@ -1,0 +1,13 @@
+# Build and Run with HL/C
+
+hl-c.hxml
+
+# Windows
+--cmd if exist out\bin rmdir /s /q out\bin
+--cmd haxelib run hlc-compiler --srcDir out\c --outDir out\bin --copyRuntimeFiles --saveCmd out\compile-hlc --verbose -w -mwindows --exFile C:\Windows\System32\dbghelp.dll
+--cmd out\bin\main
+
+# Mac
+# --cmd rm -r out/bin
+# --cmd haxelib run hlc-compiler --srcDir out/c/ --outDir out/bin/ --copyRuntimeFiles --saveCmd out/compile-hlc --verbose -w -mwindows
+# --cmd out/bin/main

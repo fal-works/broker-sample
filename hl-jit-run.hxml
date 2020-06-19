@@ -1,0 +1,4 @@
+# Build and Run with HL/JIT
+
+hl-jit.hxml
+-cmd hl out/main.hl

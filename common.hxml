@@ -1,0 +1,14 @@
+# Common Build arguments
+
+--class-path src
+--dce full
+
+--main Main
+
+--library sinker
+--library broker
+--library heaps
+--library hldx
+# --library hlsdl
+
+--debug
