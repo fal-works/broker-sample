@@ -140,7 +140,7 @@ private class WorldBuilder {
 			agentBatch,
 			bullets
 		);
-		final onHitAgent = ArmyBuilder.createOnHitNonPlayable(agents);
+		final onHitAgent = ArmyBuilder.createOnHitNonPlayable(agents, Sounds.explosion);
 
 		return new Army.NonPlayableArmy(agents, onHitAgent, bullets, onHitBullet);
 	}

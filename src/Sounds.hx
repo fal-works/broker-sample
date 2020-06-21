@@ -16,18 +16,17 @@ class Sounds {
 	public static function initialize() {
 		music = {
 			data: hxd.Res.music_466998,
-			isLooped: true,
-			preventsLayered: true
+			isLooped: true
 		};
 
 		explosion = {
 			data: hxd.Res.sound_361259_explosion,
-			preventsLayered: true
+			minInterval: 4,
+			maxQueueCount: 4
 		};
 
 		lazer = {
-			data: hxd.Res.sound_361471_laser,
-			preventsLayered: true
+			data: hxd.Res.sound_361471_laser
 		};
 
 		hxd.Window.getInstance().onClose = () -> {

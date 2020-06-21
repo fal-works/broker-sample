@@ -1,5 +1,7 @@
 package actor;
 
+import broker.sound.Sound;
+
 /**
 	Functions internally used in `Army.new()`.
 **/
@@ -72,13 +74,15 @@ class ArmyBuilder {
 		return aosoa;
 	}
 
-	public static function createOnHitNonPlayable(aosoa: NonPlayableActorAosoa) {
+	public static function createOnHitNonPlayable(aosoa: NonPlayableActorAosoa, ?sound: Sound) {
 		return (collider: Collider) -> {
 			final id = ChunkEntityId.fromInt(collider.id);
 			final chunk = aosoa.getChunk(id);
 			final index = chunk.getWriteIndex(id);
-			chunk.deadBuffer[index] = true;
-			Sounds.explosion.play();
+			final deadBuffer = chunk.deadBuffer;
+
+			if (sound != null && !deadBuffer[index]) sound.play();
+			deadBuffer[index] = true;
 		};
 	}
 }

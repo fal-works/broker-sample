@@ -3,6 +3,7 @@ import broker.geometry.MutablePoint;
 import broker.math.Random;
 import broker.scene.transition.SceneTransitionTable;
 import broker.scene.transition.FadeSceneTransition;
+import broker.sound.SoundManager;
 import gamepad.GamepadBuilder;
 import particle.ParticleAosoa;
 import scenes.SceneType;
@@ -66,6 +67,7 @@ class Global {
 
 	public static function update(): Void {
 		broker.Global.tick();
+		SoundManager.update();
 
 		gamepad.update();
 
