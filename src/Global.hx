@@ -65,6 +65,8 @@ class Global {
 	}
 
 	public static function update(): Void {
+		broker.Global.tick();
+
 		gamepad.update();
 
 		particles.update();
