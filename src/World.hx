@@ -14,7 +14,7 @@ class World {
 	final playerArmy: PlayableArmy;
 	final enemyArmy: Army;
 	final offenceCollisionDetector: CollisionDetector;
-	final offenctCollisionHandler: Collider->Collider->Void;
+	final offenceCollisionHandler: Collider->Collider->Void;
 
 	final playerAabb: MutableAabb = new MutableAabb();
 	final foundDefenceCollision: Reference<Bool> = false;
@@ -36,7 +36,7 @@ class World {
 				}
 			}
 		);
-		offenctCollisionHandler = (playerBulletCollider, enemyAgentCollider) -> {
+		offenceCollisionHandler = (playerBulletCollider, enemyAgentCollider) -> {
 			playerArmy.onHitBullet(playerBulletCollider);
 			enemyArmy.onHitAgent(enemyAgentCollider);
 		};
@@ -56,7 +56,7 @@ class World {
 		playerArmy.reloadQuadtrees();
 		enemyArmy.reloadQuadtrees();
 
-		offenceCollisionDetector.detect(offenctCollisionHandler);
+		offenceCollisionDetector.detect(offenceCollisionHandler);
 
 		if (playerHasCollided()) {
 			enemyArmy.bullets.crashAll();
