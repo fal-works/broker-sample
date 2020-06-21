@@ -17,7 +17,10 @@ class ArmyBuilder {
 			y,
 			speed,
 			direction
-		) -> bullets.emit(x, y, speed, direction);
+		) -> {
+			bullets.emit(x, y, speed, direction);
+			Sounds.lazer.play();
+		};
 		return new PlayableActorAosoa(
 			1,
 			1,
@@ -75,6 +78,7 @@ class ArmyBuilder {
 			final chunk = aosoa.getChunk(id);
 			final index = chunk.getWriteIndex(id);
 			chunk.deadBuffer[index] = true;
+			Sounds.explosion.play();
 		};
 	}
 }

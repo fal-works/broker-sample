@@ -62,6 +62,7 @@ class World {
 			enemyArmy.bullets.crashAll();
 			enemyArmy.bullets.synchronize();
 			playerArmy.playerAosoa.damage();
+			Sounds.explosion.play();
 		}
 	}
 

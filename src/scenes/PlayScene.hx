@@ -1,6 +1,5 @@
 package scenes;
 
-import hxd.Res;
 import broker.scene.SceneTypeId;
 import broker.scene.heaps.Scene;
 import broker.sound.*;
@@ -29,8 +28,7 @@ class PlayScene extends Scene {
 
 		this.world = new World(this.mainLayer);
 
-		this.sounds = new Sounds();
-		this.musicChannel = this.sounds.music.play().unwrap();
+		this.musicChannel = Sounds.music.play().unwrap();
 	}
 
 	override function update(): Void {
@@ -57,17 +55,4 @@ class PlayScene extends Scene {
 		final nextScene = new PlayScene();
 		Global.sceneTransitionTable.runTransition(this, nextScene);
 	}
-}
-
-/**
-	Set of `broker.sound.Sound` instances.
-**/
-class Sounds {
-	public final music: Sound = {
-		data: Res.music_466998,
-		isLooped: true,
-		preventsLayered: true
-	};
-
-	public function new() {}
 }
