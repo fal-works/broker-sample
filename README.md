@@ -13,10 +13,16 @@ Requires Haxe 4, HashLink and Heaps.
 haxe hl-jit-run.hxml
 ```
 
-### Native
+### Native (Windows)
 
 ```
-haxe hl-c-run.hxml
+haxe hl-c-run-win.hxml
+```
+
+### Native (Mac)
+
+```
+haxe hl-c-run-mac.hxml
 ```
 
 

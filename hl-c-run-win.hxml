@@ -1,0 +1,8 @@
+# Build and Run with HL/C (Windows)
+
+hl-c.hxml
+
+--cmd if exist out\bin rmdir /s /q out\bin
+--cmd haxelib run hlc-compiler --srcDir out\c --outDir out\bin --copyRuntimeFiles --runtime res --saveCmd out\compile-hlc -mwindows -w --exFile C:\Windows\System32\dbghelp.dll
+--cmd cd out\bin
+--cmd main

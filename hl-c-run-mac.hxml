@@ -1,0 +1,8 @@
+# Build and Run with HL/C (Mac)
+
+hl-c.hxml
+
+--cmd rm -r out/bin
+--cmd haxelib run hlc-compiler --srcDir out/c/ --outDir out/bin/ --copyRuntimeFiles --runtime res --saveCmd out/compile-hlc -mwindows
+--cmd cd out/bin
+--cmd main
