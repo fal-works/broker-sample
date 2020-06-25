@@ -2,6 +2,7 @@ import actor.Army.PlayableArmy;
 import banker.types.Reference;
 import broker.geometry.MutableAabb;
 import broker.collision.*;
+import broker.scene.Layer;
 import actor.*;
 
 class World {
@@ -19,9 +20,9 @@ class World {
 	final playerAabb: MutableAabb = new MutableAabb();
 	final foundDefenceCollision: Reference<Bool> = false;
 
-	public function new(parent: h2d.Object) {
-		playerArmy = WorldBuilder.createPlayerArmy(parent);
-		enemyArmy = WorldBuilder.createEnemyArmy(parent);
+	public function new(layer: Layer) {
+		playerArmy = WorldBuilder.createPlayerArmy(layer);
+		enemyArmy = WorldBuilder.createEnemyArmy(layer);
 
 		offenceCollisionDetector = CollisionDetector.createInterGroup(
 			Space.partitionLevel,
@@ -103,12 +104,12 @@ class World {
 **/
 @:access(World)
 private class WorldBuilder {
-	public static function createPlayerArmy(parent: h2d.Object) {
+	public static function createPlayerArmy(layer: Layer) {
 		final agentTile = h2d.Tile.fromColor(0xE0FFE0, 48, 48).center();
-		final agentBatch = new h2d.SpriteBatch(agentTile, parent);
+		final agentBatch = new h2d.SpriteBatch(agentTile, layer);
 
 		final bulletTile = h2d.Tile.fromColor(0xE0FFE0, 16, 16).center();
-		final bulletBatch = new h2d.SpriteBatch(bulletTile, parent);
+		final bulletBatch = new h2d.SpriteBatch(bulletTile, layer);
 
 		final bullets = ArmyBuilder.createNonPlayableActors(
 			World.maxPlayerBulletCount,
@@ -122,12 +123,12 @@ private class WorldBuilder {
 		return new Army.PlayableArmy(agents, onHitAgent, bullets, onHitBullet);
 	}
 
-	public static function createEnemyArmy(parent: h2d.Object) {
+	public static function createEnemyArmy(layer: Layer) {
 		final agentTile = h2d.Tile.fromColor(0xD0D0FF, 48, 48).center();
-		final agentBatch = new h2d.SpriteBatch(agentTile, parent);
+		final agentBatch = new h2d.SpriteBatch(agentTile, layer);
 
 		final bulletTile = h2d.Tile.fromColor(0xD0D0FF, 16, 16).center();
-		final bulletBatch = new h2d.SpriteBatch(bulletTile, parent);
+		final bulletBatch = new h2d.SpriteBatch(bulletTile, layer);
 
 		final bullets = ArmyBuilder.createNonPlayableActors(
 			World.maxEnemyBulletCount,
