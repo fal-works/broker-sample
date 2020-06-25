@@ -13,7 +13,7 @@ class PlayScene extends Scene {
 	var explosionSound: Sound;
 
 	public function new(?heapsScene: h2d.Scene) {
-		super(if (heapsScene != null) heapsScene else new h2d.Scene());
+		super(heapsScene);
 
 		@:nullSafety(Off) {
 			this.world = null;
@@ -28,11 +28,11 @@ class PlayScene extends Scene {
 	override function initialize(): Void {
 		super.initialize();
 
-		this.world = new World(this.mainLayer);
+		this.world = new World(this.layers.main);
 
 		this.musicChannel = Sounds.music.play().unwrap();
 
-		this.background.add(SceneObject.fromImage(Res.background));
+		this.layers.background.add(SceneObject.fromImage(Res.background));
 	}
 
 	override function update(): Void {
@@ -52,7 +52,7 @@ class PlayScene extends Scene {
 
 	override function activate(): Void {
 		super.activate();
-		Global.resetParticles(this.mainLayer);
+		Global.resetParticles(this.layers.main);
 	}
 
 	function goToNextScene(): Void {
