@@ -2,7 +2,7 @@ package scenes;
 
 import hxd.Res;
 import broker.scene.SceneTypeId;
-import broker.scene.heaps.Scene;
+import broker.scene.Scene;
 import broker.scene.SceneObject;
 import broker.sound.*;
 
