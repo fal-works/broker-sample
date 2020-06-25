@@ -1,9 +1,7 @@
 package scenes;
 
-import hxd.Res;
 import broker.scene.SceneTypeId;
 import broker.scene.Scene;
-import broker.scene.SceneObject;
 import broker.sound.*;
 
 class PlayScene extends Scene {
@@ -32,7 +30,7 @@ class PlayScene extends Scene {
 
 		this.musicChannel = Sounds.music.play().unwrap();
 
-		this.layers.background.add(SceneObject.fromImage(Res.background));
+		// this.layers.background.add(SceneObject.fromImage(Res.background));
 	}
 
 	override function update(): Void {
