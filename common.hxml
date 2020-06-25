@@ -11,4 +11,6 @@
 --library hldx
 # --library hlsdl
 
+--macro nullSafety("broker", Strict)
+
 --debug
