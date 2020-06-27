@@ -12,6 +12,11 @@ class World {
 	static inline final maxEnemyBulletCount: UInt = 1024;
 	static inline final playerAgentHalfCollisionSize = 16.0;
 
+	/**
+		The layer that contains all drawable objects in `this` world.
+	**/
+	public final layer: Layer;
+
 	final playerArmy: PlayableArmy;
 	final enemyArmy: Army;
 	final offenceCollisionDetector: CollisionDetector;
@@ -20,9 +25,12 @@ class World {
 	final playerAabb: MutableAabb = new MutableAabb();
 	final foundDefenceCollision: Reference<Bool> = false;
 
-	public function new(layer: Layer) {
-		playerArmy = WorldBuilder.createPlayerArmy(layer);
-		enemyArmy = WorldBuilder.createEnemyArmy(layer);
+	public function new(parentLayer: Layer) {
+		this.layer = new Layer();
+		parentLayer.add(this.layer);
+
+		playerArmy = WorldBuilder.createPlayerArmy(this.layer);
+		enemyArmy = WorldBuilder.createEnemyArmy(this.layer);
 
 		offenceCollisionDetector = CollisionDetector.createInterGroup(
 			Space.partitionLevel,
