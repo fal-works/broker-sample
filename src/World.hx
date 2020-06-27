@@ -1,4 +1,5 @@
 import actor.Army.PlayableArmy;
+import banker.vector.Vector;
 import banker.types.Reference;
 import broker.geometry.MutableAabb;
 import broker.collision.*;
@@ -125,7 +126,7 @@ private class WorldBuilder {
 		final bullets = ArmyBuilder.createNonPlayableActors(
 			World.maxPlayerBulletCount,
 			bulletBatch,
-			[bulletTile]
+			Vector.fromArrayCopy([bulletTile])
 		);
 		final onHitBullet = ArmyBuilder.createOnHitNonPlayable(bullets);
 
@@ -136,9 +137,8 @@ private class WorldBuilder {
 	}
 
 	public static function createEnemyArmy(layer: Layer) {
-		final agentEntireTile = hxd.Res.enemy.toTile();
-		final agentTiles = [for (i in 0...4) agentEntireTile.sub(0, i * 72, 72, 72).center()];
-		final agentBatch = new h2d.SpriteBatch(agentTiles.getFirst(), layer);
+		final agentTiles = broker.image.FrameTiles.fromImage(hxd.Res.enemy_72px).frames;
+		final agentBatch = new h2d.SpriteBatch(agentTiles[0], layer);
 		agentBatch.hasRotationScale = true;
 
 		final bulletTile = h2d.Tile.fromColor(0xD0D0FF, 16, 16).center();
@@ -148,7 +148,7 @@ private class WorldBuilder {
 		final bullets = ArmyBuilder.createNonPlayableActors(
 			World.maxEnemyBulletCount,
 			bulletBatch,
-			[bulletTile]
+			Vector.fromArrayCopy([bulletTile])
 		);
 		final onHitBullet = ArmyBuilder.createOnHitNonPlayable(bullets);
 

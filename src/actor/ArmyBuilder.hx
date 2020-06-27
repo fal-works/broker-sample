@@ -1,6 +1,7 @@
 package actor;
 
 import broker.sound.Sound;
+import banker.vector.Vector;
 
 /**
 	Functions internally used in `Army.new()`.
@@ -46,7 +47,7 @@ class ArmyBuilder {
 	public static function createNonPlayableActors(
 		maxEntityCount: UInt,
 		batch: h2d.SpriteBatch,
-		tiles: Array<h2d.Tile>,
+		tiles: Vector<h2d.Tile>,
 		?bullets: ActorAosoa
 	): NonPlayableActorAosoa {
 		final chunkCapacity = UInts.min(defaultChunkCapacity, maxEntityCount);
@@ -71,7 +72,7 @@ class ArmyBuilder {
 			tile.width / 2,
 			tile.height / 2,
 			fireCallback,
-			Vector.fromArrayCopy(tiles),
+			tiles,
 			8
 		);
 		return aosoa;
