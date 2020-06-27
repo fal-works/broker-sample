@@ -29,6 +29,9 @@ class World {
 		this.layer = new Layer();
 		parentLayer.add(this.layer);
 
+		final filter = new h2d.filter.Glow(0xFFFFFF, 0.7, 100, 1, 1, true);
+		this.layer.setFilter(filter);
+
 		playerArmy = WorldBuilder.createPlayerArmy(this.layer);
 		enemyArmy = WorldBuilder.createEnemyArmy(this.layer);
 
