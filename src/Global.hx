@@ -1,6 +1,7 @@
 import broker.input.heaps.HeapsPadMultitap;
 import broker.geometry.MutablePoint;
 import broker.math.Random;
+import broker.scene.Layer;
 import broker.scene.transition.SceneTransitionTable;
 import broker.scene.transition.FadeSceneTransition;
 import broker.sound.SoundManager;
@@ -49,8 +50,8 @@ class Global {
 	public static final sceneTransitionTable = new SceneTransitionTable();
 
 	public static function initialize(): Void {
-		final dummyObject = new h2d.Object();
-		resetParticles(dummyObject, 1);
+		final dummyLayer = new Layer();
+		resetParticles(dummyLayer, 1);
 
 		sceneTransitionTable.add({
 			precedingType: SceneType.play,
@@ -90,14 +91,14 @@ class Global {
 	}
 
 	public static function resetParticles(
-		parent: h2d.Object,
+		parentLayer: Layer,
 		maxEntityCount: UInt = 1024
 	): Void {
 		final chunkCapacity: UInt = 128;
 		final chunkCount: UInt = Math.ceil(maxEntityCount / chunkCapacity);
 
 		final tile = h2d.Tile.fromColor(0xFFFFFF, 12, 12).center();
-		final batch = new h2d.SpriteBatch(tile, parent);
+		final batch = new h2d.SpriteBatch(tile, parentLayer);
 		batch.hasRotationScale = true;
 		final spriteFactory = () -> new h2d.SpriteBatch.BatchElement(tile);
 		particles = new ParticleAosoa(
