@@ -2,6 +2,16 @@ package actor;
 
 @:banker_verified
 class NonPlayableActor extends Actor {
+	@:banker_chunkLevelFinal
+	var rotationVelocity: Float = 0.03;
+
+	@:nullSafety(Off)
+	@:banker_chunkLevelFinal
+	var tiles: Vector<h2d.Tile>;
+
+	@:banker_chunkLevelFinal
+	var animationIntervalFrames: UInt;
+
 	/**
 		`true` if the entity should be disused in the next call of `update()`.
 		May be set in collision detection process.
@@ -14,11 +24,15 @@ class NonPlayableActor extends Actor {
 		y: WritableVector<Float>,
 		vx: Float,
 		vy: Float,
+		frameCount: WritableVector<UInt>,
 		i: Int,
 		disuse: Bool,
 		disusedSprites: WritableVector<BatchElement>,
 		disusedCount: Int,
-		dead: WritableVector<Bool>
+		dead: WritableVector<Bool>,
+		rotationVelocity: Float,
+		tiles: Vector<h2d.Tile>,
+		animationIntervalFrames: UInt
 	): Void {
 		final currentX = x[i];
 		final currentY = y[i];
@@ -35,6 +49,10 @@ class NonPlayableActor extends Actor {
 			x[i] = currentX + vx;
 			y[i] = currentY + vy;
 		}
+
+		sprite.rotation += rotationVelocity;
+		sprite.t = tiles.ref[UInts.divide(frameCount[i], animationIntervalFrames) % tiles.length];
+		++frameCount[i];
 	}
 
 	static function mayFire(

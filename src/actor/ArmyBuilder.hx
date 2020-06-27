@@ -46,6 +46,7 @@ class ArmyBuilder {
 	public static function createNonPlayableActors(
 		maxEntityCount: UInt,
 		batch: h2d.SpriteBatch,
+		tiles: Array<h2d.Tile>,
 		?bullets: ActorAosoa
 	): NonPlayableActorAosoa {
 		final chunkCapacity = UInts.min(defaultChunkCapacity, maxEntityCount);
@@ -69,7 +70,9 @@ class ArmyBuilder {
 			spriteFactory,
 			tile.width / 2,
 			tile.height / 2,
-			fireCallback
+			fireCallback,
+			Vector.fromArrayCopy(tiles),
+			8
 		);
 		return aosoa;
 	}

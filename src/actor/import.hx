@@ -1,6 +1,7 @@
 package actor;
 
 import h2d.SpriteBatch.BatchElement;
+import banker.vector.Vector;
 import banker.vector.WritableVector;
 import banker.types.Reference;
 import banker.aosoa.ChunkEntityId;

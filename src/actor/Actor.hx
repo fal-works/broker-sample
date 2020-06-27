@@ -23,6 +23,36 @@ class Actor extends BasicEntity {
 	var fire: FireCallback;
 
 	/**
+		Elapsed frame count of each entity.
+	**/
+	var frameCount: UInt = UInt.zero;
+
+	@:banker_useEntity
+	static function emit(
+		sprite: BatchElement,
+		x: WritableVector<Float>,
+		y: WritableVector<Float>,
+		vx: WritableVector<Float>,
+		vy: WritableVector<Float>,
+		frameCount: WritableVector<UInt>,
+		i: Int,
+		usedSprites: WritableVector<BatchElement>,
+		usedCount: Int,
+		initialX: Float,
+		initialY: Float,
+		speed: Float,
+		direction: Float
+	): Void {
+		x[i] = initialX;
+		y[i] = initialY;
+		vx[i] = speed * Math.cos(direction);
+		vy[i] = speed * Math.sin(direction);
+		frameCount[i] = UInt.zero;
+		usedSprites[usedCount] = sprite;
+		++usedCount;
+	}
+
+	/**
 		Registers entities to `quadtree`.
 		@param quadtree
 	**/
