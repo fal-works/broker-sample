@@ -142,11 +142,11 @@ private class WorldBuilder {
 			Unit(hxd.Res.enemy_bullet_24px) // enemy_bullet
 		]));
 
-		final agentTiles = atlas.frameTilesMap.get("enemy").frames;
+		final agentTiles = atlas.get("enemy").frames;
 		final agentBatch = new h2d.SpriteBatch(agentTiles[0], layer);
 		agentBatch.hasRotationScale = true;
 
-		final bulletTiles = atlas.frameTilesMap.get("enemy_bullet").frames;
+		final bulletTiles = atlas.get("enemy_bullet").frames;
 		final bulletBatch = new h2d.SpriteBatch(bulletTiles[0], layer);
 		bulletBatch.hasRotationScale = true;
 
