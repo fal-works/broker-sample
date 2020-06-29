@@ -137,18 +137,23 @@ private class WorldBuilder {
 	}
 
 	public static function createEnemyArmy(layer: Layer) {
-		final agentTiles = broker.image.FrameTiles.fromImage(hxd.Res.enemy_72px).frames;
+		final atlas = broker.image.Atlas.from(Vertical([
+			Unit(hxd.Res.enemy_72px), // enemy
+			Unit(hxd.Res.enemy_bullet_24px) // enemy_bullet
+		]));
+
+		final agentTiles = atlas.frameTilesMap.get("enemy").frames;
 		final agentBatch = new h2d.SpriteBatch(agentTiles[0], layer);
 		agentBatch.hasRotationScale = true;
 
-		final bulletTile = h2d.Tile.fromColor(0xD0D0FF, 16, 16).center();
-		final bulletBatch = new h2d.SpriteBatch(bulletTile, layer);
+		final bulletTiles = atlas.frameTilesMap.get("enemy_bullet").frames;
+		final bulletBatch = new h2d.SpriteBatch(bulletTiles[0], layer);
 		bulletBatch.hasRotationScale = true;
 
 		final bullets = ArmyBuilder.createNonPlayableActors(
 			World.maxEnemyBulletCount,
 			bulletBatch,
-			Vector.fromArrayCopy([bulletTile])
+			bulletTiles
 		);
 		final onHitBullet = ArmyBuilder.createOnHitNonPlayable(bullets);
 
@@ -158,7 +163,10 @@ private class WorldBuilder {
 			agentTiles,
 			bullets
 		);
-		final onHitAgent = ArmyBuilder.createOnHitNonPlayable(agents, Sounds.explosion);
+		final onHitAgent = ArmyBuilder.createOnHitNonPlayable(
+			agents,
+			Sounds.explosion
+		);
 
 		return new Army.NonPlayableArmy(agents, onHitAgent, bullets, onHitBullet);
 	}
