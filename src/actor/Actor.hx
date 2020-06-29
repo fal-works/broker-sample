@@ -27,6 +27,12 @@ class Actor extends BasicEntity {
 	**/
 	var frameCount: UInt = UInt.zero;
 
+	/**
+		`true` if the entity should be disused in the next call of `update()`.
+		May be set in collision detection process.
+	**/
+	var dead: Bool = false;
+
 	@:banker_useEntity
 	static function emit(
 		sprite: BatchElement,
@@ -35,6 +41,7 @@ class Actor extends BasicEntity {
 		vx: WritableVector<Float>,
 		vy: WritableVector<Float>,
 		frameCount: WritableVector<UInt>,
+		dead: WritableVector<Bool>,
 		i: Int,
 		usedSprites: WritableVector<BatchElement>,
 		usedCount: Int,
@@ -48,6 +55,7 @@ class Actor extends BasicEntity {
 		vx[i] = speed * Math.cos(direction);
 		vy[i] = speed * Math.sin(direction);
 		frameCount[i] = UInt.zero;
+		dead[i] = false;
 		usedSprites[usedCount] = sprite;
 		++usedCount;
 	}

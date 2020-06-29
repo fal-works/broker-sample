@@ -12,12 +12,6 @@ class NonPlayableActor extends Actor {
 	@:banker_chunkLevelFinal
 	var animationIntervalFrames: UInt;
 
-	/**
-		`true` if the entity should be disused in the next call of `update()`.
-		May be set in collision detection process.
-	**/
-	var dead: Bool = false;
-
 	static function update(
 		sprite: BatchElement,
 		x: WritableVector<Float>,
@@ -41,10 +35,7 @@ class NonPlayableActor extends Actor {
 			disuse = true;
 			disusedSprites[disusedCount] = sprite;
 			++disusedCount;
-			if (dead[i]) {
-				Global.emitParticles(currentX, currentY, 2, 16, 32);
-				dead[i] = false;
-			}
+			if (dead[i]) Global.emitParticles(currentX, currentY, 2, 16, 32);
 		} else {
 			x[i] = currentX + vx;
 			y[i] = currentY + vy;
