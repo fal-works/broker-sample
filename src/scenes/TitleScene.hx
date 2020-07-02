@@ -16,7 +16,7 @@ class TitleScene extends Scene {
 	override function update(): Void {
 		super.update();
 
-		if (Global.gamepad.buttons.A.isPressed) {
+		if (Global.gamepad.buttons.A.isJustPressed) {
 			Global.sceneTransitionTable.runTransition(this, new PlayScene());
 		}
 	}
