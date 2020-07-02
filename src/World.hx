@@ -91,14 +91,16 @@ class World {
 	function updatePlayerAabb(): Void {
 		final playerPosition = Global.playerPosition;
 		playerArmy.playerAosoa.assignPosition(playerPosition);
-		playerAabb.set(playerPosition.x()
-			- playerAgentHalfCollisionSize,
-			playerPosition.y()
-			- playerAgentHalfCollisionSize,
-			playerPosition.x()
-			+ playerAgentHalfCollisionSize,
-			playerPosition.y()
-			+ playerAgentHalfCollisionSize);
+		final playerX = playerPosition.x();
+		final playerY = playerPosition.y();
+
+		final halfSize = playerAgentHalfCollisionSize;
+		playerAabb.set(
+			playerX - halfSize,
+			playerY - halfSize,
+			playerX + halfSize,
+			playerY + halfSize
+		);
 	}
 
 	function playerHasCollided(): Bool {
