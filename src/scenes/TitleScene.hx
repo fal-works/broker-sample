@@ -10,23 +10,7 @@ class TitleScene extends Scene {
 	override function initialize(): Void {
 		super.initialize();
 
-		var font: h2d.Font;
-		var startMessage: String;
-		if (hxd.Res.loader.fs.exists("my_font.fnt")) {
-			font = new hxd.res.BitmapFont(hxd.Res.loader.fs.get("my_font.fnt")).toFont();
-			startMessage = "■ START GAME ■";
-		} else {
-			font = hxd.res.DefaultFont.get();
-			startMessage = "START GAME";
-		}
-		final textField = new h2d.Text(font);
-		textField.text = "■ START GAME ■";
-		textField.textAlign = Center;
-		textField.setPosition(
-			Global.width / 2,
-			Global.height / 2 - textField.textHeight / 2
-		);
-		this.layers.main.add(textField);
+		this.layers.main.add(this.createStartMessage());
 	}
 
 	override function update(): Void {
@@ -35,5 +19,30 @@ class TitleScene extends Scene {
 		if (Global.gamepad.buttons.A.isPressed) {
 			Global.sceneTransitionTable.runTransition(this, new PlayScene());
 		}
+	}
+
+	function createStartMessage() {
+		var font: h2d.Font;
+		var startMessage: String;
+
+		final fileSystem = hxd.Res.loader.fs;
+		if (fileSystem.exists("my_font.fnt")) {
+			// The file is not included in this repository. Provide `my_font.fnt` yourself for testing this.
+			font = new hxd.res.BitmapFont(fileSystem.get("my_font.fnt")).toFont();
+			startMessage = "■ START GAME ■"; // testing multibyte
+		} else {
+			font = hxd.res.DefaultFont.get();
+			startMessage = "START GAME";
+		}
+
+		final textField = new h2d.Text(font);
+		textField.text = startMessage;
+		textField.textAlign = Center;
+		textField.setPosition(
+			Global.width / 2,
+			Global.height / 2 - textField.textHeight / 2
+		);
+
+		return textField;
 	}
 }
