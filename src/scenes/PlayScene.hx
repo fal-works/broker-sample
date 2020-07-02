@@ -22,7 +22,7 @@ class PlayScene extends Scene {
 	}
 
 	override public inline function getTypeId(): SceneTypeId
-		return SceneType.play;
+		return SceneType.Play;
 
 	override function initialize(): Void {
 		super.initialize();
@@ -40,8 +40,8 @@ class PlayScene extends Scene {
 
 		final buttons = Global.gamepad.buttons;
 
-		if (buttons.Y.isPressed) {
-			this.goToNextScene();
+		if (buttons.Y.isJustPressed) {
+			this.goToTitle();
 			return;
 		}
 
@@ -54,8 +54,15 @@ class PlayScene extends Scene {
 		Global.resetParticles(this.layers.main);
 	}
 
-	function goToNextScene(): Void {
-		final nextScene = new PlayScene();
+	override function deactivate(): Void
+		SoundManager.stopAll();
+
+	override function destroy(): Void
+		SoundManager.stopAll();
+
+	function goToTitle(): Void {
+		if (this.isTransitioning) return;
+		final nextScene = new TitleScene();
 		Global.sceneTransitionTable.runTransition(this, nextScene);
 	}
 }

@@ -54,8 +54,20 @@ class Global {
 		resetParticles(dummyLayer, 1);
 
 		sceneTransitionTable.add({
-			precedingType: SceneType.play,
-			succeedingType: SceneType.play,
+			precedingType: SceneType.All,
+			succeedingType: SceneType.Play,
+			transition: ({
+				color: 0xFF000000,
+				fadeOutDuration: 30,
+				intervalDuration: 30,
+				fadeInDuration: 30,
+				destroy: true
+			} : FadeSceneTransition)
+		});
+
+		sceneTransitionTable.add({
+			precedingType: SceneType.Play,
+			succeedingType: SceneType.All,
 			transition: ({
 				color: 0xFF000000,
 				fadeOutDuration: 30,

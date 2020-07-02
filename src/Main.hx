@@ -1,6 +1,5 @@
 import broker.scene.SceneStack;
 import broker.tools.Gc;
-import scenes.PlayScene;
 
 class Main extends hxd.App {
 	static function main()
@@ -17,7 +16,7 @@ class Main extends hxd.App {
 		Global.initialize();
 		Sounds.initialize();
 
-		final initialScene = new PlayScene(s2d);
+		final initialScene = new scenes.TitleScene(s2d);
 		initialScene.fadeInFrom(ArgbColor.WHITE, 60, true);
 		sceneStack = new SceneStack(initialScene, 16).newTag("scene stack");
 
