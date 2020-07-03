@@ -4,13 +4,16 @@ import broker.scene.SceneTypeId;
 import broker.scene.Scene;
 
 class TitleScene extends Scene {
+	var font: Maybe<h2d.Font> = Maybe.none();
+
 	override public inline function getTypeId(): SceneTypeId
 		return SceneType.Title;
 
 	override function initialize(): Void {
 		super.initialize();
 
-		this.layers.main.add(this.createStartMessage());
+		final fontInfo = prepareFont();
+		this.layers.main.add(this.createStartMessage(fontInfo));
 	}
 
 	override function update(): Void {
@@ -21,27 +24,41 @@ class TitleScene extends Scene {
 		}
 	}
 
-	function createStartMessage() {
+	override function destroy(): Void {
+		super.destroy();
+		if (font.isSome()) font.unwrap().dispose();
+	}
+
+	function prepareFont(): { font: h2d.Font, isDefault: Bool } {
 		var font: h2d.Font;
-		var startMessage: String;
+		var isDefault: Bool;
 
 		final fileSystem = hxd.Res.loader.fs;
 		if (fileSystem.exists("my_sdf_font.fnt")) {
 			// The file is not included in this repository. Provide `my_sdf_font.fnt` yourself for testing this.
 			final file = fileSystem.get("my_sdf_font.fnt");
-			font = new hxd.res.BitmapFont(file).toSdfFont(32, 3); // Assuming the alpha channel is for distance
-			startMessage = "■ START GAME ■"; // testing multibyte
+			// Assuming the alpha channel is for distance
+			font = new hxd.res.BitmapFont(file).toSdfFont(32, 3);
+			isDefault = false;
 		} else if (fileSystem.exists("my_font.fnt")) {
 			// The file is not included in this repository. Provide `my_font.fnt` yourself for testing this.
 			final file = fileSystem.get("my_font.fnt");
 			font = new hxd.res.BitmapFont(file).toFont();
-			startMessage = "■ START GAME ■"; // testing multibyte
+			isDefault = false;
 		} else {
 			font = hxd.res.DefaultFont.get();
-			startMessage = "START GAME";
+			isDefault = true;
 		}
 
-		final textField = new h2d.Text(font);
+		this.font = Maybe.from(font);
+		return { font: font, isDefault: isDefault };
+	}
+
+	function createStartMessage(fontInfo: { font: h2d.Font, isDefault: Bool }): h2d.Text {
+		// "■" for testing multibyte
+		final startMessage = fontInfo.isDefault ? "SAMPLE PROJECT" : "■ SAMPLE PROJECT ■";
+
+		final textField = new h2d.Text(fontInfo.font);
 		textField.smooth = true;
 		textField.text = startMessage;
 		textField.textAlign = Center;
