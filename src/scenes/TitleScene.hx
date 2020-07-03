@@ -26,9 +26,15 @@ class TitleScene extends Scene {
 		var startMessage: String;
 
 		final fileSystem = hxd.Res.loader.fs;
-		if (fileSystem.exists("my_font.fnt")) {
+		if (fileSystem.exists("my_sdf_font.fnt")) {
+			// The file is not included in this repository. Provide `my_sdf_font.fnt` yourself for testing this.
+			final file = fileSystem.get("my_sdf_font.fnt");
+			font = new hxd.res.BitmapFont(file).toSdfFont(32, 3); // Assuming the alpha channel is for distance
+			startMessage = "■ START GAME ■"; // testing multibyte
+		} else if (fileSystem.exists("my_font.fnt")) {
 			// The file is not included in this repository. Provide `my_font.fnt` yourself for testing this.
-			font = new hxd.res.BitmapFont(fileSystem.get("my_font.fnt")).toFont();
+			final file = fileSystem.get("my_font.fnt");
+			font = new hxd.res.BitmapFont(file).toFont();
 			startMessage = "■ START GAME ■"; // testing multibyte
 		} else {
 			font = hxd.res.DefaultFont.get();
@@ -36,6 +42,7 @@ class TitleScene extends Scene {
 		}
 
 		final textField = new h2d.Text(font);
+		textField.smooth = true;
 		textField.text = startMessage;
 		textField.textAlign = Center;
 		textField.setPosition(
