@@ -2,9 +2,17 @@ package scenes;
 
 import broker.scene.SceneTypeId;
 import broker.scene.Scene;
+import broker.menu.Menu;
 
 class TitleScene extends Scene {
 	var font: Maybe<h2d.Font> = Maybe.none();
+	var menu = Menu.create({
+		initialOptions: [],
+		listenFocusPrevious: [()->Global.gamepad.buttons.D_UP.isJustPressed],
+		listenFocusNext: [()->Global.gamepad.buttons.D_DOWN.isJustPressed],
+		listenSubmit: [()->Global.gamepad.buttons.A.isJustPressed],
+		onAddOption: [(object, index) -> object.setPosition(0.0, index * 48.0)]
+	});
 
 	override public inline function getTypeId(): SceneTypeId
 		return SceneType.Title;
@@ -13,15 +21,52 @@ class TitleScene extends Scene {
 		super.initialize();
 
 		final fontInfo = prepareFont();
-		this.layers.main.add(this.createStartMessage(fontInfo));
+		final font = fontInfo.font;
+
+		final mainLayer = this.layers.main;
+		mainLayer.add(createStartMessage(0.35 * Global.height, fontInfo));
+		mainLayer.add(initializeMenu(0.5 * Global.height, font));
+	}
+
+	function initializeMenu(y: Float, font: h2d.Font): Menu {
+		final menu = this.menu;
+
+		final startTextField = createTextField("START", font, Center);
+		final gotoPlayScene = () -> {
+			Global.sceneTransitionTable.runTransition(this, new PlayScene());
+		};
+		menu.addOption({
+			object: startTextField,
+			onFocus: [() -> startTextField.textColor = 0xFFFFFF],
+			onDefocus: [() -> startTextField.textColor = 0x808080],
+			onSelect: [gotoPlayScene]
+		});
+
+		final quitTextField = createTextField("QUIT", font, Center);
+		final quit = () -> {
+			this.fadeOutTo(0xFF000000, 30, true);
+			this.timers.push(({
+				duration: 45,
+				onComplete: () -> Sys.exit(0)
+			}));
+		};
+		menu.addOption({
+			object: quitTextField,
+			onFocus: [() -> quitTextField.textColor = 0xFFFFFF],
+			onDefocus: [() -> quitTextField.textColor = 0x808080],
+			onSelect: [quit]
+		});
+
+		menu.setPosition(0.5 * Global.width, y);
+		menu.focusAt(UInt.zero);
+
+		return menu;
 	}
 
 	override function update(): Void {
 		super.update();
 
-		if (Global.gamepad.buttons.A.isJustPressed) {
-			Global.sceneTransitionTable.runTransition(this, new PlayScene());
-		}
+		this.menu.listen();
 	}
 
 	override function destroy(): Void {
@@ -54,18 +99,27 @@ class TitleScene extends Scene {
 		return { font: font, isDefault: isDefault };
 	}
 
-	function createStartMessage(fontInfo: { font: h2d.Font, isDefault: Bool }): h2d.Text {
+	function createTextField(
+		text: String,
+		font: h2d.Font,
+		?align: h2d.Text.Align
+	): h2d.Text {
+		final textField = new h2d.Text(font);
+		textField.smooth = true;
+		textField.text = text;
+		if (align != null) textField.textAlign = align;
+		return textField;
+	}
+
+	function createStartMessage(
+		y: Float,
+		fontInfo: { font: h2d.Font, isDefault: Bool }
+	): h2d.Text {
 		// "■" for testing multibyte
 		final startMessage = fontInfo.isDefault ? "SAMPLE PROJECT" : "■ SAMPLE PROJECT ■";
 
-		final textField = new h2d.Text(fontInfo.font);
-		textField.smooth = true;
-		textField.text = startMessage;
-		textField.textAlign = Center;
-		textField.setPosition(
-			Global.width / 2,
-			Global.height / 2 - textField.textHeight / 2
-		);
+		final textField = createTextField(startMessage, fontInfo.font, Center);
+		textField.setPosition(0.5 * Global.width, y);
 
 		return textField;
 	}
