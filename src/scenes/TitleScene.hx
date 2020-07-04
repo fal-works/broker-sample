@@ -10,7 +10,7 @@ class TitleScene extends Scene {
 		initialOptions: [],
 		listenFocusPrevious: [()->Global.gamepad.buttons.D_UP.isJustPressed],
 		listenFocusNext: [()->Global.gamepad.buttons.D_DOWN.isJustPressed],
-		listenSubmit: [()->Global.gamepad.buttons.A.isJustPressed],
+		listenSelect: [()->Global.gamepad.buttons.A.isJustPressed],
 		onAddOption: [(object, index) -> object.setPosition(0.0, index * 48.0)]
 	});
 
