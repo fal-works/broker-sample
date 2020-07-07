@@ -1,9 +1,7 @@
 package particle;
 
-import broker.entity.heaps.BasicEntity;
-
 @:banker_verified
-class Particle extends BasicEntity {
+class Particle extends broker.entity.BasicBatchEntity {
 	var visibilityRatio: Float = 1.0;
 	var rotationAngle: Float = 0.0;
 	var rotationAngleVelocity: Float = 0.1;

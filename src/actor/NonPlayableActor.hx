@@ -7,13 +7,13 @@ class NonPlayableActor extends Actor {
 
 	@:nullSafety(Off)
 	@:banker_chunkLevelFinal
-	var tiles: Vector<h2d.Tile>;
+	var tiles: Vector<Tile>;
 
 	@:banker_chunkLevelFinal
 	var animationIntervalFrames: UInt;
 
 	static function update(
-		sprite: BatchElement,
+		sprite: BatchSprite,
 		x: WritableVector<Float>,
 		y: WritableVector<Float>,
 		vx: Float,
@@ -21,11 +21,11 @@ class NonPlayableActor extends Actor {
 		frameCount: WritableVector<UInt>,
 		i: Int,
 		disuse: Bool,
-		disusedSprites: WritableVector<BatchElement>,
+		disusedSprites: WritableVector<BatchSprite>,
 		disusedCount: Int,
 		dead: WritableVector<Bool>,
 		rotationVelocity: Float,
-		tiles: Vector<h2d.Tile>,
+		tiles: Vector<Tile>,
 		animationIntervalFrames: UInt
 	): Void {
 		final currentX = x[i];
@@ -42,7 +42,9 @@ class NonPlayableActor extends Actor {
 		}
 
 		sprite.rotation += rotationVelocity;
-		sprite.t = tiles.ref[UInts.divide(frameCount[i], animationIntervalFrames) % tiles.length];
+		sprite.tile = tiles.ref[
+			UInts.divide(frameCount[i], animationIntervalFrames) % tiles.length
+		];
 		++frameCount[i];
 	}
 

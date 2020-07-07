@@ -58,7 +58,7 @@ class PlayableActor extends Actor {
 	**/
 	@:banker_onCompleteSynchronize
 	static function synchronizeSprite(
-		sprite: h2d.SpriteBatch.BatchElement,
+		sprite: BatchSprite,
 		x: Float,
 		y: Float,
 		damageEffectCoolTime: Int

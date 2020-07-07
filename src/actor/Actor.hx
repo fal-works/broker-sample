@@ -1,9 +1,7 @@
 package actor;
 
-import broker.entity.heaps.BasicEntity;
-
 @:banker_verified
-class Actor extends BasicEntity {
+class Actor extends broker.entity.BasicBatchEntity {
 	@:nullSafety(Off)
 	@:banker_chunkLevelFinal
 	var halfTileWidth: Float;
@@ -35,7 +33,7 @@ class Actor extends BasicEntity {
 
 	@:banker_useEntity
 	static function emit(
-		sprite: BatchElement,
+		sprite: BatchSprite,
 		x: WritableVector<Float>,
 		y: WritableVector<Float>,
 		vx: WritableVector<Float>,
@@ -43,7 +41,7 @@ class Actor extends BasicEntity {
 		frameCount: WritableVector<UInt>,
 		dead: WritableVector<Bool>,
 		i: Int,
-		usedSprites: WritableVector<BatchElement>,
+		usedSprites: WritableVector<BatchSprite>,
 		usedCount: Int,
 		initialX: Float,
 		initialY: Float,
@@ -115,10 +113,10 @@ class Actor extends BasicEntity {
 	static function crashAll(
 		x: Float,
 		y: Float,
-		sprite: h2d.SpriteBatch.BatchElement,
+		sprite: BatchSprite,
 		i: Int,
 		disuse: Bool,
-		disusedSprites: banker.vector.WritableVector<h2d.SpriteBatch.BatchElement>,
+		disusedSprites: banker.vector.WritableVector<BatchSprite>,
 		disusedCount: Int
 	): Void {
 		disuse = true;

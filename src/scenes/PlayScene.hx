@@ -2,7 +2,7 @@ package scenes;
 
 import broker.scene.SceneTypeId;
 import broker.scene.Scene;
-import broker.scene.SceneObject;
+import broker.draw.TileDraw;
 import broker.sound.*;
 
 class PlayScene extends Scene {
@@ -31,7 +31,7 @@ class PlayScene extends Scene {
 
 		this.musicChannel = Sounds.music.play().unwrap();
 
-		this.layers.background.add(SceneObject.fromImage(hxd.Res.background));
+		this.layers.background.add(TileDraw.fromImage(hxd.Res.background));
 	}
 
 	override function update(): Void {

@@ -1,7 +1,6 @@
 package actor;
 
 import broker.sound.Sound;
-import banker.vector.Vector;
 
 /**
 	Functions internally used in `Army.new()`.
@@ -10,11 +9,11 @@ class ArmyBuilder {
 	static var defaultChunkCapacity: UInt = 64;
 
 	public static function createPlayableActors(
-		batch: h2d.SpriteBatch,
+		batch: BatchDraw,
+		defaultTile: Tile,
 		bullets: ActorAosoa
 	): PlayableActorAosoa {
-		final tile = batch.tile;
-		final spriteFactory = () -> new h2d.SpriteBatch.BatchElement(tile);
+		final spriteFactory = () -> new BatchSprite(defaultTile);
 		final fireCallback = (
 			x,
 			y,
@@ -29,8 +28,8 @@ class ArmyBuilder {
 			1,
 			batch,
 			spriteFactory,
-			tile.width / 2,
-			tile.height / 2,
+			defaultTile.width / 2,
+			defaultTile.height / 2,
 			fireCallback
 		);
 	}
@@ -46,8 +45,8 @@ class ArmyBuilder {
 
 	public static function createNonPlayableActors(
 		maxEntityCount: UInt,
-		batch: h2d.SpriteBatch,
-		tiles: Vector<h2d.Tile>,
+		batch: BatchDraw,
+		tiles: Vector<Tile>,
 		?bullets: ActorAosoa
 	): NonPlayableActorAosoa {
 		final chunkCapacity = UInts.min(defaultChunkCapacity, maxEntityCount);
@@ -55,8 +54,8 @@ class ArmyBuilder {
 
 		var aosoa: NonPlayableActorAosoa;
 
-		final tile = batch.tile;
-		final spriteFactory = () -> new h2d.SpriteBatch.BatchElement(tile);
+		final defaultTile = tiles[0];
+		final spriteFactory = () -> new BatchSprite(defaultTile);
 
 		final fireCallback = if (bullets != null) {
 			function(x, y, speed, direction) bullets.emit(x, y, speed, direction);
@@ -69,8 +68,8 @@ class ArmyBuilder {
 			chunkCount,
 			batch,
 			spriteFactory,
-			tile.width / 2,
-			tile.height / 2,
+			defaultTile.width / 2,
+			defaultTile.height / 2,
 			fireCallback,
 			tiles,
 			8
@@ -78,7 +77,10 @@ class ArmyBuilder {
 		return aosoa;
 	}
 
-	public static function createOnHitNonPlayable(aosoa: NonPlayableActorAosoa, ?sound: Sound) {
+	public static function createOnHitNonPlayable(
+		aosoa: NonPlayableActorAosoa,
+		?sound: Sound
+	) {
 		return (collider: Collider) -> {
 			final id = ChunkEntityId.fromInt(collider.id);
 			final chunk = aosoa.getChunk(id);
