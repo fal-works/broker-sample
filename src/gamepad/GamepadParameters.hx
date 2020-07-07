@@ -1,7 +1,7 @@
 package gamepad;
 
 import broker.input.ButtonStatus;
-import broker.input.heaps.HeapsPadPort;
+import broker.input.physical.PadPort;
 
 /**
 	Set of parameters to be stored/used by a `Gamepad` instance.
@@ -9,7 +9,7 @@ import broker.input.heaps.HeapsPadPort;
 @:structInit
 class GamepadParameters implements ripper.Data {
 	public final updateButtonStatus: () -> Void;
-	public final heapsPadPort: HeapsPadPort;
+	public final gamepadPort: PadPort;
 	public final analogStickThreshold: Float;
 
 	public final speedChangeButtonStatus: ButtonStatus;

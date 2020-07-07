@@ -47,7 +47,7 @@ class TitleScene extends Scene {
 			this.fadeOutTo(0xFF000000, 30, true);
 			this.timers.push(({
 				duration: 45,
-				onComplete: () -> Sys.exit(0)
+				onComplete: () -> hxd.System.exit()
 			}));
 		};
 		menu.addOption({

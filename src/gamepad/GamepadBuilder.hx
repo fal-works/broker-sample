@@ -1,16 +1,18 @@
 package gamepad;
 
-import broker.input.heaps.HeapsInputTools;
-import broker.input.heaps.HeapsPadPort;
+import broker.input.physical.PhysicalInput;
+import broker.input.physical.PadPort;
+import broker.input.physical.KeyCode;
+import broker.input.physical.PadCode;
 import broker.input.builtin.simple.Button;
 import broker.input.builtin.simple.ButtonStatusMap;
 
 @:structInit
 class GamepadBuilder implements ripper.Data {
-	public final keyCodeMap: Map<Button, Array<Int>>;
-	public final padButtonCodeMap: Map<Button, Array<Int>>;
+	public final keyCodeMap: Map<Button, Array<KeyCode>>;
+	public final padCodeMap: Map<Button, Array<PadCode>>;
 
-	public final heapsPadPort: HeapsPadPort;
+	public final gamepadPort: PadPort;
 	public final analogStickThreshold: Float;
 
 	public final speedChangeButton: Button;
@@ -20,16 +22,16 @@ class GamepadBuilder implements ripper.Data {
 	public function build() {
 		final buttons = new ButtonStatusMap();
 
-		final getButtonChecker = HeapsInputTools.createButtonCheckerGenerator(
+		final getButtonChecker = PhysicalInput.createButtonCheckerGenerator(
 			keyCodeMap,
-			padButtonCodeMap,
-			heapsPadPort
+			padCodeMap,
+			gamepadPort
 		);
 		final updateButtonStatus = buttons.createUpdater(getButtonChecker);
 
 		final parameters: GamepadParameters = {
 			updateButtonStatus: updateButtonStatus,
-			heapsPadPort: heapsPadPort,
+			gamepadPort: gamepadPort,
 			analogStickThreshold: analogStickThreshold,
 			speedChangeButtonStatus: buttons.get(speedChangeButton),
 			defaultSpeed: defaultSpeed,

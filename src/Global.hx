@@ -1,4 +1,6 @@
-import broker.input.heaps.HeapsPadMultitap;
+import broker.input.physical.KeyCode;
+import broker.input.physical.PadCode;
+import broker.input.physical.PadMultitap;
 import broker.geometry.MutablePoint;
 import broker.math.Random;
 import broker.scene.Layer;
@@ -12,26 +14,26 @@ import scenes.SceneType;
 class Global {
 	public static final defaultGamepadBuilder: GamepadBuilder = {
 		keyCodeMap: [
-			A => [hxd.Key.Z],
-			B => [hxd.Key.X],
-			X => [hxd.Key.SHIFT],
-			Y => [hxd.Key.ESCAPE],
-			D_LEFT => [hxd.Key.LEFT],
-			D_UP => [hxd.Key.UP],
-			D_RIGHT => [hxd.Key.RIGHT],
-			D_DOWN => [hxd.Key.DOWN]
+			A => [KeyCode.Z],
+			B => [KeyCode.X],
+			X => [KeyCode.SHIFT],
+			Y => [KeyCode.ESC],
+			D_LEFT => [KeyCode.LEFT],
+			D_UP => [KeyCode.UP],
+			D_RIGHT => [KeyCode.RIGHT],
+			D_DOWN => [KeyCode.DOWN]
 		],
-		padButtonCodeMap: [
-			A => [hxd.Pad.DEFAULT_CONFIG.A],
-			B => [hxd.Pad.DEFAULT_CONFIG.B],
-			X => [hxd.Pad.DEFAULT_CONFIG.X],
-			Y => [hxd.Pad.DEFAULT_CONFIG.Y],
-			D_LEFT => [hxd.Pad.DEFAULT_CONFIG.dpadLeft],
-			D_UP => [hxd.Pad.DEFAULT_CONFIG.dpadUp],
-			D_RIGHT => [hxd.Pad.DEFAULT_CONFIG.dpadRight],
-			D_DOWN => [hxd.Pad.DEFAULT_CONFIG.dpadDown]
+		padCodeMap: [
+			A => [PadCode.A],
+			B => [PadCode.B],
+			X => [PadCode.X],
+			Y => [PadCode.Y],
+			D_LEFT => [PadCode.LEFT],
+			D_UP => [PadCode.UP],
+			D_RIGHT => [PadCode.RIGHT],
+			D_DOWN => [PadCode.DOWN]
 		],
-		heapsPadPort: HeapsPadMultitap.ports[0],
+		gamepadPort: PadMultitap.ports[0],
 		analogStickThreshold: 0.1,
 		speedChangeButton: X,
 		defaultSpeed: 9,
