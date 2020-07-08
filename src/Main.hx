@@ -11,7 +11,9 @@ class Main extends hxd.App {
 		hxd.Res.initLocal();
 
 		broker.App.initialize(800, 600);
-		broker.scene.heaps.Scene.setApplication(this);
+		broker.App.initializeHeaps(this);
+		broker.tools.Window.fullscreen = true;
+
 		Global.initialize();
 		Sounds.initialize();
 
