@@ -81,7 +81,7 @@ class Global {
 	}
 
 	public static function update(): Void {
-		broker.Global.tick();
+		broker.App.tick();
 		SoundManager.update();
 
 		gamepad.update();
