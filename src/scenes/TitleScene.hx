@@ -3,8 +3,9 @@ package scenes;
 import broker.scene.SceneTypeId;
 import broker.scene.Scene;
 import broker.menu.Menu;
-import broker.tools.Window;
+import broker.menu.MenuOption;
 import broker.timer.Timer;
+import broker.tools.Window;
 
 class TitleScene extends Scene {
 	var font: Maybe<h2d.Font> = Maybe.none();
@@ -33,18 +34,11 @@ class TitleScene extends Scene {
 	function initializeMenu(y: Float, font: h2d.Font): Menu {
 		final menu = this.menu;
 
-		final startTextField = createTextField("START", font, Center);
 		final gotoPlayScene = () -> {
 			Global.sceneTransitionTable.runTransition(this, new PlayScene());
 		};
-		menu.addOption({
-			object: startTextField,
-			onFocus: [() -> startTextField.textColor = 0xFFFFFF],
-			onDefocus: [() -> startTextField.textColor = 0x808080],
-			onSelect: [gotoPlayScene]
-		});
+		menu.addOption(createMenuOption("START", font, gotoPlayScene));
 
-		final quitTextField = createTextField("QUIT", font, Center);
 		final quit = () -> {
 			final fadeOut = this.fadeOutTo(0xFF000000, 30, true);
 			final closeWindow: Timer = {
@@ -53,17 +47,22 @@ class TitleScene extends Scene {
 			};
 			fadeOut.setNext(closeWindow);
 		};
-		menu.addOption({
-			object: quitTextField,
-			onFocus: [() -> quitTextField.textColor = 0xFFFFFF],
-			onDefocus: [() -> quitTextField.textColor = 0x808080],
-			onSelect: [quit]
-		});
+		menu.addOption(createMenuOption("QUIT", font, quit));
 
 		menu.setPosition(0.5 * Global.width, y);
 		menu.focusAt(UInt.zero);
 
 		return menu;
+	}
+
+	function createMenuOption(text: String, font: h2d.Font, onSelect: Void->Void): MenuOption {
+		final textField = createTextField(text, font, Center);
+		return {
+			object: textField,
+			onFocus: [() -> textField.textColor = 0xFFFFFF],
+			onDefocus: [() -> textField.textColor = 0x808080],
+			onSelect: [onSelect]
+		};
 	}
 
 	override function update(): Void {
