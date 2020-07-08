@@ -10,6 +10,7 @@ class Main extends hxd.App {
 	override function init() {
 		hxd.Res.initLocal();
 
+		broker.tools.Window.initialize();
 		broker.input.physical.PhysicalInput.initialize();
 		broker.scene.heaps.Scene.setApplication(this);
 		Global.initialize();

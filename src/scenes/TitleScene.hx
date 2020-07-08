@@ -3,6 +3,8 @@ package scenes;
 import broker.scene.SceneTypeId;
 import broker.scene.Scene;
 import broker.menu.Menu;
+import broker.tools.Window;
+import broker.timer.Timer;
 
 class TitleScene extends Scene {
 	var font: Maybe<h2d.Font> = Maybe.none();
@@ -44,11 +46,12 @@ class TitleScene extends Scene {
 
 		final quitTextField = createTextField("QUIT", font, Center);
 		final quit = () -> {
-			this.fadeOutTo(0xFF000000, 30, true);
-			this.timers.push(({
-				duration: 45,
-				onComplete: () -> hxd.System.exit()
-			}));
+			final fadeOut = this.fadeOutTo(0xFF000000, 30, true);
+			final closeWindow: Timer = {
+				duration: 15,
+				onComplete: () -> Window.close()
+			};
+			fadeOut.setNext(closeWindow);
 		};
 		menu.addOption({
 			object: quitTextField,

@@ -1,5 +1,4 @@
 import broker.sound.Sound;
-import broker.sound.SoundManager;
 
 /**
 	Set of `broker.sound.Sound` instances.
@@ -27,11 +26,6 @@ class Sounds {
 
 		lazer = {
 			data: hxd.Res.sound_361471_laser
-		};
-
-		hxd.Window.getInstance().onClose = () -> {
-			SoundManager.disposeAll();
-			return true;
 		};
 	}
 	#else
