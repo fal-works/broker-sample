@@ -13,4 +13,7 @@
 
 --macro nullSafety("broker", Strict)
 
+-D windowFixed
+-D windowTitle=broker sample
+
 --debug
