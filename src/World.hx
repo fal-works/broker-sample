@@ -4,6 +4,9 @@ import banker.types.Reference;
 import broker.geometry.MutableAabb;
 import broker.collision.*;
 import broker.scene.Layer;
+import broker.image.Tile;
+import broker.draw.BatchDraw;
+import broker.App;
 import actor.*;
 
 class World {
@@ -119,11 +122,13 @@ class World {
 @:access(World)
 private class WorldBuilder {
 	public static function createPlayerArmy(layer: Layer) {
-		final agentTile = h2d.Tile.fromColor(0xE0FFE0, 48, 48).center();
-		final agentBatch = new h2d.SpriteBatch(agentTile, layer);
+		final agentTile = Tile.fromRgb(0xE0FFE0, 48, 48).toCentered();
+		final agentBatch = new BatchDraw(agentTile.getTexture(), App.width, App.height, false);
+		layer.add(agentBatch);
 
-		final bulletTile = h2d.Tile.fromColor(0xE0FFE0, 16, 16).center();
-		final bulletBatch = new h2d.SpriteBatch(bulletTile, layer);
+		final bulletTile = Tile.fromRgb(0xE0FFE0, 16, 16).toCentered();
+		final bulletBatch = new BatchDraw(bulletTile.getTexture(), App.width, App.height, false);
+		layer.add(bulletBatch);
 
 		final bullets = ArmyBuilder.createNonPlayableActors(
 			World.maxPlayerBulletCount,
@@ -147,14 +152,15 @@ private class WorldBuilder {
 			Unit(hxd.Res.enemy_72px), // enemy
 			Unit(hxd.Res.enemy_bullet_24px) // enemy_bullet
 		]));
+		final texture = atlas.texture;
 
 		final agentTiles = atlas.get("enemy").toVector();
-		final agentBatch = new h2d.SpriteBatch(agentTiles[0], layer);
-		agentBatch.hasRotationScale = true;
+		final agentBatch = new BatchDraw(texture, App.width, App.height);
+		layer.add(agentBatch);
 
 		final bulletTiles = atlas.get("enemy_bullet").toVector();
-		final bulletBatch = new h2d.SpriteBatch(bulletTiles[0], layer);
-		bulletBatch.hasRotationScale = true;
+		final bulletBatch = new BatchDraw(texture, App.width, App.height);
+		layer.add(bulletBatch);
 
 		final bullets = ArmyBuilder.createNonPlayableActors(
 			World.maxEnemyBulletCount,
