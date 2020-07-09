@@ -11,4 +11,4 @@ import broker.math.Random;
 import broker.image.Tile;
 import broker.draw.BatchDraw;
 import broker.draw.BatchSprite;
-import Global.HabitableZone;
+import World.HabitableZone;

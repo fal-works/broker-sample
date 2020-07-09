@@ -3,7 +3,6 @@ import broker.input.physical.PadCode;
 import broker.input.physical.PadMultitap;
 import broker.geometry.MutablePoint;
 import broker.math.Random;
-import broker.scene.Layer;
 import broker.scene.transition.SceneTransitionTable;
 import broker.scene.transition.FadeSceneTransition;
 import broker.sound.SoundManager;
@@ -47,14 +46,15 @@ class Global {
 
 	public static final playerPosition = new MutablePoint();
 
-	public static var particles(default, null): ParticleAosoa;
+	/**
+		Refers to the particles of the current `World` instance.
+	**/
+	@:nullSafety(Off)
+	public static var particles: ParticleAosoa;
 
 	public static final sceneTransitionTable = new SceneTransitionTable();
 
 	public static function initialize(): Void {
-		final dummyLayer = new Layer();
-		resetParticles(dummyLayer, 1);
-
 		sceneTransitionTable.add({
 			precedingType: SceneType.All,
 			succeedingType: SceneType.Play,
@@ -85,9 +85,6 @@ class Global {
 		SoundManager.update();
 
 		gamepad.update();
-
-		particles.update();
-		particles.synchronize();
 	}
 
 	public static function emitParticles(
@@ -103,34 +100,4 @@ class Global {
 			++i;
 		}
 	}
-
-	public static function resetParticles(
-		parentLayer: Layer,
-		maxEntityCount: UInt = 1024
-	): Void {
-		final chunkCapacity: UInt = 128;
-		final chunkCount: UInt = Math.ceil(maxEntityCount / chunkCapacity);
-
-		final tile = h2d.Tile.fromColor(0xFFFFFF, 12, 12).center();
-		final batch = new h2d.SpriteBatch(tile, parentLayer);
-		batch.hasRotationScale = true;
-		final spriteFactory = () -> new h2d.SpriteBatch.BatchElement(tile);
-		particles = new ParticleAosoa(
-			chunkCapacity,
-			chunkCount,
-			batch,
-			spriteFactory
-		);
-	}
-}
-
-class HabitableZone {
-	static extern inline final margin: Float = 64;
-	public static extern inline final leftX: Float = 0 - margin;
-	public static extern inline final topY: Float = 0 - margin;
-	public static extern inline final rightX: Float = 800 + margin;
-	public static extern inline final bottomY: Float = 600 + margin;
-
-	public static extern inline function containsPoint(x: Float, y: Float): Bool
-		return y < bottomY && topY <= y && leftX <= x && x < rightX;
 }

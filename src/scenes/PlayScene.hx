@@ -1,5 +1,6 @@
 package scenes;
 
+import broker.App;
 import broker.scene.SceneTypeId;
 import broker.scene.Scene;
 import broker.draw.TileDraw;
@@ -27,7 +28,10 @@ class PlayScene extends Scene {
 	override function initialize(): Void {
 		super.initialize();
 
-		this.world = new World(this.layers.main);
+		this.world = new World();
+		final worldArea = this.world.area;
+		worldArea.setCenterPosition(App.width / 2, App.height / 2);
+		this.layers.main.add(worldArea);
 
 		this.musicChannel = Sounds.music.play().unwrap();
 
@@ -51,14 +55,15 @@ class PlayScene extends Scene {
 
 	override function activate(): Void {
 		super.activate();
-		Global.resetParticles(this.layers.main);
 	}
 
 	override function deactivate(): Void
 		SoundManager.stopAll();
 
-	override function destroy(): Void
+	override function destroy(): Void {
 		SoundManager.stopAll();
+		this.world.dispose();
+	}
 
 	function goToTitle(): Void {
 		if (this.isTransitioning) return;
