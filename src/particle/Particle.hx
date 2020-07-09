@@ -8,14 +8,14 @@ class Particle extends broker.entity.BasicBatchEntity {
 
 	@:banker_useEntity
 	static function emit(
-		sprite: h2d.SpriteBatch.BatchElement,
+		sprite: BatchSprite,
 		x: WritableVector<Float>,
 		y: WritableVector<Float>,
 		vx: WritableVector<Float>,
 		vy: WritableVector<Float>,
 		visibilityRatio: WritableVector<Float>,
 		i: Int,
-		usedSprites: WritableVector<h2d.SpriteBatch.BatchElement>,
+		usedSprites: WritableVector<BatchSprite>,
 		usedCount: Int,
 		initialX: Float,
 		initialY: Float,
@@ -32,7 +32,7 @@ class Particle extends broker.entity.BasicBatchEntity {
 	}
 
 	static function update(
-		sprite: BatchElement,
+		sprite: BatchSprite,
 		x: WritableVector<Float>,
 		y: WritableVector<Float>,
 		vx: WritableVector<Float>,
@@ -42,7 +42,7 @@ class Particle extends broker.entity.BasicBatchEntity {
 		visibilityRatio: WritableVector<Float>,
 		i: Int,
 		disuse: Bool,
-		disusedSprites: WritableVector<BatchElement>,
+		disusedSprites: WritableVector<BatchSprite>,
 		disusedCount: Int
 	): Void {
 		final currentX = x[i];
@@ -72,7 +72,7 @@ class Particle extends broker.entity.BasicBatchEntity {
 	**/
 	@:banker_onCompleteSynchronize
 	static function synchronizeSprite(
-		sprite: h2d.SpriteBatch.BatchElement,
+		sprite: BatchSprite,
 		x: Float,
 		y: Float,
 		rotationAngle: Float,
