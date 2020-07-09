@@ -6,9 +6,10 @@ import broker.menu.Menu;
 import broker.menu.MenuOption;
 import broker.timer.Timer;
 import broker.tools.Window;
+import broker.text.*;
 
 class TitleScene extends Scene {
-	var font: Maybe<h2d.Font> = Maybe.none();
+	var font: Maybe<Font> = Maybe.none();
 	var menu = Menu.create({
 		initialOptions: [],
 		listenFocusPrevious: [()->Global.gamepad.buttons.D_UP.isJustPressed],
@@ -31,7 +32,7 @@ class TitleScene extends Scene {
 		mainLayer.add(initializeMenu(0.5 * Global.height, font));
 	}
 
-	function initializeMenu(y: Float, font: h2d.Font): Menu {
+	function initializeMenu(y: Float, font: Font): Menu {
 		final menu = this.menu;
 
 		final gotoPlayScene = () -> {
@@ -55,12 +56,13 @@ class TitleScene extends Scene {
 		return menu;
 	}
 
-	function createMenuOption(text: String, font: h2d.Font, onSelect: Void->Void): MenuOption {
-		final textField = createTextField(text, font, Center);
+	function createMenuOption(text: String, font: Font, onSelect: Void->Void): MenuOption {
+		final textField = new Text(text, Center, font);
+		textField.textRgb = 0xFFFFFF;
 		return {
 			object: textField,
-			onFocus: [() -> textField.textColor = 0xFFFFFF],
-			onDefocus: [() -> textField.textColor = 0x808080],
+			onFocus: [() -> textField.alpha = 1.0],
+			onDefocus: [() -> textField.alpha = 0.5],
 			onSelect: [onSelect]
 		};
 	}
@@ -76,8 +78,8 @@ class TitleScene extends Scene {
 		if (font.isSome()) font.unwrap().dispose();
 	}
 
-	function prepareFont(): { font: h2d.Font, isDefault: Bool } {
-		var font: h2d.Font;
+	function prepareFont(): { font: Font, isDefault: Bool } {
+		var font: Font;
 		var isDefault: Bool;
 
 		final fileSystem = hxd.Res.loader.fs;
@@ -101,26 +103,14 @@ class TitleScene extends Scene {
 		return { font: font, isDefault: isDefault };
 	}
 
-	function createTextField(
-		text: String,
-		font: h2d.Font,
-		?align: h2d.Text.Align
-	): h2d.Text {
-		final textField = new h2d.Text(font);
-		textField.smooth = true;
-		textField.text = text;
-		if (align != null) textField.textAlign = align;
-		return textField;
-	}
-
 	function createStartMessage(
 		y: Float,
-		fontInfo: { font: h2d.Font, isDefault: Bool }
-	): h2d.Text {
+		fontInfo: { font: Font, isDefault: Bool }
+	): Text {
 		// "■" for testing multibyte
 		final startMessage = fontInfo.isDefault ? "SAMPLE PROJECT" : "■ SAMPLE PROJECT ■";
 
-		final textField = createTextField(startMessage, fontInfo.font, Center);
+		final textField = new Text(startMessage, Center, fontInfo.font);
 		textField.setPosition(0.5 * Global.width, y);
 
 		return textField;

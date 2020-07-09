@@ -1,33 +1,28 @@
 import broker.scene.SceneStack;
 import broker.tools.Gc;
 
-class Main extends hxd.App {
-	static function main()
-		new Main();
+class Main extends broker.App {
+	static function main() {
+		new Main(800, 600);
+	}
 
 	var sceneStack: SceneStack;
 
-	override function init() {
+	override function initialize(): Void {
 		hxd.Res.initLocal();
-
-		broker.App.initialize(800, 600);
-		broker.App.initializeHeaps(this);
-		broker.tools.Window.fullscreen = true;
 
 		Global.initialize();
 		Sounds.initialize();
 
-		final initialScene = new scenes.TitleScene(s2d);
+		final initialScene = new scenes.TitleScene();
 		initialScene.fadeInFrom(ArgbColor.WHITE, 60, true);
 		sceneStack = new SceneStack(initialScene, 16).newTag("scene stack");
 
 		Gc.startLogging(100);
 	}
 
-	override function update(dt: Float) {
+	override function update() {
 		Global.update();
 		sceneStack.update();
-
-		Gc.update();
 	}
 }

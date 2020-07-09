@@ -81,7 +81,7 @@ class Particle extends broker.entity.BasicBatchEntity {
 		sprite.x = x;
 		sprite.y = y;
 		sprite.rotation = rotationAngle;
-		sprite.scale = 0.25 + 0.75 * visibilityRatio;
+		sprite.setScale(0.25 + 0.75 * visibilityRatio);
 		sprite.alpha = visibilityRatio;
 	}
 }
