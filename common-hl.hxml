@@ -1,0 +1,6 @@
+common.hxml
+
+--library hldx
+# --library hlsdl
+
+--debug
