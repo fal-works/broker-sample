@@ -1,0 +1,5 @@
+# Build with JavaScript
+
+common.hxml
+-js out/main.js
+--cmd terser out/main.js --compress --output docs/main.min.js
