@@ -10,6 +10,7 @@ import broker.text.*;
 
 class TitleScene extends Scene {
 	var font: Maybe<Font> = Maybe.none();
+	var useDefaultFont = false;
 	var menu = Menu.create({
 		initialOptions: [],
 		listenFocusPrevious: [()->Global.gamepad.buttons.D_UP.isJustPressed],
@@ -26,6 +27,7 @@ class TitleScene extends Scene {
 
 		final fontInfo = prepareFont();
 		final font = fontInfo.font;
+		this.useDefaultFont = fontInfo.isDefault;
 
 		final mainLayer = this.layers.main;
 		mainLayer.add(createStartMessage(0.35 * Global.height, fontInfo));
@@ -75,7 +77,7 @@ class TitleScene extends Scene {
 
 	override function destroy(): Void {
 		super.destroy();
-		if (font.isSome()) font.unwrap().dispose();
+		if (font.isSome() && !useDefaultFont) font.unwrap().dispose();
 	}
 
 	function prepareFont(): { font: Font, isDefault: Bool } {
