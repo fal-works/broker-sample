@@ -9,7 +9,11 @@ class Main extends broker.App {
 	var sceneStack: SceneStack;
 
 	override function initialize(): Void {
+		#if js
+		hxd.Res.initEmbed();
+		#else
 		hxd.Res.initLocal();
+		#end
 
 		Global.initialize();
 		Sounds.initialize();
