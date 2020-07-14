@@ -2,4 +2,5 @@
 
 common.hxml
 -js out/main.js
+-D sneaker_assertion_disable
 --cmd terser out/main.js --compress --output docs/main.min.js
