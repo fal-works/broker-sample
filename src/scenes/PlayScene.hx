@@ -49,8 +49,8 @@ class PlayScene extends Scene {
 			return;
 		}
 
-		if (buttons.B.isJustPressed)
-			musicChannel.fadeOut(2.0);
+		// if (buttons.B.isJustPressed)
+		// 	musicChannel.fadeOut(2.0);
 	}
 
 	override function activate(): Void {
