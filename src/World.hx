@@ -72,7 +72,7 @@ class World {
 			enemyArmy.onHitAgent(enemyAgentCollider);
 		};
 
-		playerArmy.newAgent(0.5 * Global.width, 0.75 * Global.height, 0, 0);
+		playerArmy.newAgent(0.5 * worldWidth, 0.75 * worldHeight, 0, 0);
 	}
 
 	public function update(): Void {
@@ -106,7 +106,7 @@ class World {
 
 	function newEnemy(): Void {
 		enemyArmy.newAgent(
-			(0.1 + 0.8 * Math.random()) * Global.width,
+			(0.1 + 0.8 * Math.random()) * worldWidth,
 			-32,
 			1 + Math.random() * 1,
 			0.5 * Math.PI
