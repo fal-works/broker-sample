@@ -47,7 +47,7 @@ class World {
 		final armies = new Object();
 		area.add(armies);
 
-		final filter = new h2d.filter.Glow(0xFFFFFF, 0.7, 100, 1, 1, true);
+		final filter = new h2d.filter.Glow(0xFFFFFF, 1.0, 30, 0.7, 1.0, true);
 		armies.setFilter(filter);
 
 		particles = Global.particles = WorldBuilder.createParticles(area);
