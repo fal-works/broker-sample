@@ -24,8 +24,8 @@ class Particle extends broker.entity.BasicBatchEntity {
 	): Void {
 		x[i] = initialX;
 		y[i] = initialY;
-		vx[i] = speed * Math.cos(direction);
-		vy[i] = speed * Math.sin(direction);
+		vx[i] = speed * cos(direction);
+		vy[i] = speed * sin(direction);
 		visibilityRatio[i] = 1.0;
 		usedSprites[usedCount] = sprite;
 		++usedCount;

@@ -37,4 +37,5 @@ Then open `docs/index.html`
 ## Dependencies
 
 - [broker](https://github.com/fal-works/broker) v0.4.0 or compatible
+- [reckoner](https://github.com/fal-works/reckoner) v0.1.0 or compatible
 - [heaps](http://heaps.io/) v1.8.0 or compatible

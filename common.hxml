@@ -6,6 +6,7 @@
 --main Main
 
 --library broker
+--library reckoner
 --library heaps
 
 --macro nullSafety("broker", Strict)
